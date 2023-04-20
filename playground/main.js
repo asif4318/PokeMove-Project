@@ -35,15 +35,3 @@ for (let i = 0; i < level_info.length; i++) {
 console.log(Object.keys(learnsets[0]));
 console.log(`Total moves: ${total_moves}`);
 console.log(level_sum);
-
-console.log(keys);
-
-let csvRows = keys.map((name) => `"${name}"\n`);
-fs.writeFile(
-  path.join(__dirname, "random_generation/output/pokemon_names.csv"),
-  csvRows.join(""),
-  (err) => {
-    if (err) throw err;
-    console.log("Names saved to names.csv");
-  }
-);

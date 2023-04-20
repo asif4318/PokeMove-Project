@@ -7,7 +7,15 @@ function capitalize(s) {
   return s[0].toUpperCase() + s.slice(1);
 }
 
-let real_pokemon_names = Object.keys(BattleLearnsets);
+let keys = Object.keys(BattleLearnsets);
+let real_pokemon_names = [];
+
+for (let i = 0; i < keys.length; i++) {
+  if (BattleLearnsets[keys[i]].hasOwnProperty("learnset") == true) {
+    real_pokemon_names.push(keys[i]);
+  }
+}
+
 let uniqueNames = new Set();
 
 // Generate unique names until we have 100,000 of them
