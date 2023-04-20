@@ -1,13 +1,20 @@
 const { faker } = require("@faker-js/faker");
 const path = require("path");
 const fs = require("fs");
+const { BattleLearnsets } = require("./learnsets.js");
 
-// Create an empty Set to keep track of unique names
+function capitalize(s) {
+  return s[0].toUpperCase() + s.slice(1);
+}
+
+let real_pokemon_names = Object.keys(BattleLearnsets);
 let uniqueNames = new Set();
 
 // Generate unique names until we have 100,000 of them
 while (uniqueNames.size < 100000) {
-  let name = faker.name.firstName() + faker.name.lastName();
+  var real_pokemon =
+    real_pokemon_names[Math.floor(Math.random() * real_pokemon_names.length)];
+  let name = capitalize(real_pokemon) + faker.name.firstName();
   uniqueNames.add(name);
 }
 
