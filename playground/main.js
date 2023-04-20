@@ -3,20 +3,33 @@ const { BattleLearnsets } = require("./learnsets.js");
 let keys = Object.keys(BattleLearnsets);
 console.log(keys);
 
-let keys_2 = [];
+let learnsets = [];
 
 for (let i = 0; i < keys.length; i++) {
   if (BattleLearnsets[keys[i]].hasOwnProperty("learnset") == true) {
-    keys_2.push(Object.keys(BattleLearnsets[keys[i]].learnset));
+    learnsets.push(BattleLearnsets[keys[i]].learnset);
   }
 }
 
 let total_moves = 0;
-for (let i = 0; i < keys_2.length; i++) {
-  for (let j = 0; j < keys_2[i].length; j++) {
+for (let i = 0; i < learnsets.length; i++) {
+  for (let j = 0; j < Object.keys(learnsets[i]).length; j++) {
     total_moves++;
   }
 }
 
-console.log(Object.keys(keys_2[0]));
+let level_info = [];
+for (let i = 0; i < learnsets.length; i++) {
+  for (let j = 0; j < Object.keys(learnsets[i]).length; j++) {
+    level_info.push(learnsets[i][Object.keys(learnsets[i])[j]]);
+  }
+}
+
+let level_sum = 0;
+for (let i = 0; i < level_info.length; i++) {
+  level_sum += level_info[i].length;
+}
+
+console.log(Object.keys(learnsets[0]));
 console.log(`Total moves: ${total_moves}`);
+console.log(level_sum);
