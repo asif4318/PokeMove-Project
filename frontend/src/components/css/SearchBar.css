@@ -9,6 +9,7 @@ input {
     padding: 0.5rem;
 }
 
+/* Change size of search box if the screen is small (mobile) */
 @media screen and (max-width: 600px) {
     input {
       width: 75%;

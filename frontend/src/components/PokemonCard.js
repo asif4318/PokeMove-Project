@@ -3,21 +3,11 @@ import React, { useState, useEffect } from "react";
 const PokemonCard = ({ pokemon_name }) => {
   const [spriteURL, setSpriteURL] = useState("");
 
-  const style = {
-    display: "flex",
-    background: "#F0F0F0",
-    border: "none",
-    borderRadius: "8px",
-    padding: "4rem",
-    margin: "2rem",
-  };
-
   const getSprite = () => {
     try {
       const temp = pokemon_name.split(" ")[0];
-      fetch(`https://pokeapi.co/api/v2/pokemon/${temp}`)
-        .then((res) => res.json())
-        .then((data) => setSpriteURL(data.sprites.front_default));
+      //Smogon api to get image
+      setSpriteURL(`https://www.smogon.com/dex/media/sprites/xy/${temp}.gif`);
     } catch (error) {
       setSpriteURL("");
     }
@@ -42,7 +32,7 @@ const PokemonCard = ({ pokemon_name }) => {
 
   return (
     <div>
-      <h2 style={{ margin: "0.5rem" }}>{capitalizeName(pokemon_name)}</h2>
+      <h2>{capitalizeName(pokemon_name)}</h2>
       <img src={spriteURL}></img>
     </div>
   );

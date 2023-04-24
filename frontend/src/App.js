@@ -34,10 +34,8 @@ function App() {
       let temp = [];
       const i_max = pokemonList.length < 10 ? pokemonList : 10;
       for (let i = 0; i < i_max; i++) {
-        {
-          console.log(i_max);
-          temp.push(pokemonList[i]);
-        }
+        console.log(i_max);
+        temp.push(pokemonList[i]);
       }
       setFirstTen(temp);
     }
@@ -47,19 +45,9 @@ function App() {
     <div className="App">
       <h1>PokeMove Dex</h1>
       <SearchBar onChangeHandler={handleChange} />
-      <div
-        style={{
-          display: "flex-box",
-          flexWrap: "wrap",
-          padding: "0.5rem",
-          marginTop: "1rem",
-          marginBottom: "1rem",
-          marginLeft: "4rem",
-          marginRight: "4rem",
-        }}
-      >
+      <div style={{ diplay: "flex" }}>
         {firstTen.map((names) => {
-          return <PokemonCard pokemon_name={pokemonList[0]} />;
+          return <PokemonCard pokemon_name={names} />;
         })}
       </div>
     </div>
