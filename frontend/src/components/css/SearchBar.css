@@ -1,0 +1,16 @@
+
+
+input {
+    width: 40%;
+    height: 2vh;
+    background: #F0F0F0;
+    border: none;
+    border-radius: 8px;
+    padding: 0.5rem;
+}
+
+@media screen and (max-width: 600px) {
+    input {
+      width: 75%;
+    }
+}

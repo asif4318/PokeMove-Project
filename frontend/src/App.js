@@ -1,34 +1,45 @@
-import logo from "./logo.svg";
 import React, { useState, useEffect } from "react";
 import "./App.css";
 import SearchBar from "./components/SearchBar";
-
-const Test = ({ text }) => {
-  return <p>{text}</p>;
-};
+import PokemonCard from "./components/PokemonCard";
 
 function App() {
   const [searchText, setSearchText] = useState("");
   const [pokemonList, setList] = useState("");
-  const [splitList, setSplitList] = useState([]);
+  const [firstTen, setFirstTen] = useState([]);
 
   const handleChange = (evt) => {
     setSearchText(evt.target.value);
-    // fetch(`http://localhost:5000/hashmap?move=${evt.target.value}/`, {
-    //   method: "get",
-    //   mode: "cors",
-    // }).then((response) => console.log(response));
   };
 
   useEffect(() => {
     fetch(`http://127.0.0.1:5000/hashmap?move=${searchText}`)
       .then((res) => res.json())
-      .then((data) => setList(data.pokemon));
+      .then((data) => {
+        let tempList = data.pokemon.split("\n");
+        for (let i = 0; i < tempList.length; i++) {
+          const wordRegex = /[A-Z]?[a-z]+|[0-9]+|[A-Z]+(?![a-z])/g;
+          const string = tempList[i];
+          const result = string.match(wordRegex);
+          tempList[i] = result[0] + " " + result[1];
+        }
+        setList(tempList);
+      });
   }, [searchText]);
 
   useEffect(() => {
     if (pokemonList !== undefined) {
-      setSplitList(pokemonList.split("\n"));
+      console.log(pokemonList[0]);
+      setFirstTen([]);
+      let temp = [];
+      const i_max = pokemonList.length < 10 ? pokemonList : 10;
+      for (let i = 0; i < i_max; i++) {
+        {
+          console.log(i_max);
+          temp.push(pokemonList[i]);
+        }
+      }
+      setFirstTen(temp);
     }
   }, [pokemonList]);
 
@@ -36,7 +47,21 @@ function App() {
     <div className="App">
       <h1>PokeMove Dex</h1>
       <SearchBar onChangeHandler={handleChange} />
-      <Test text={splitList[0]}></Test>
+      <div
+        style={{
+          display: "flex-box",
+          flexWrap: "wrap",
+          padding: "0.5rem",
+          marginTop: "1rem",
+          marginBottom: "1rem",
+          marginLeft: "4rem",
+          marginRight: "4rem",
+        }}
+      >
+        {firstTen.map((names) => {
+          return <PokemonCard pokemon_name={pokemonList[0]} />;
+        })}
+      </div>
     </div>
   );
 }

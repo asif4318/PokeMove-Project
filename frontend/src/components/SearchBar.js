@@ -1,18 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
+import "./css/SearchBar.css";
 
-const SearchBar = ({ onChangeHandler }) => {
-  const style = {
-    width: "25rem",
-    height: "2vh",
-    background: "#F0F0F0",
-    border: "none",
-    borderRadius: "8px",
-    padding: "0.5rem",
-  };
-
+const SearchBar = ({ onChangeHandler, isSmallScreen }) => {
   return (
     <input
-      style={style}
       type="text"
       placeholder="Search Move"
       onChange={onChangeHandler}
