@@ -32,13 +32,8 @@ class HashMap:
         index = self._get_index(key)
         if self.table[index] is None:
             self.table[index] = [(key, value)]
-        # else:
-        #     for i, (k, v) in enumerate(self.table[index]):
-        #         if k == key:
-        #             self.table[index][i] = (key, value)
-        #             break
         else:
-            self.table[index].append((key,value))
+            self.table[index].append((key, value))
         self.size += 1
 
     def _resize(self):
@@ -59,7 +54,7 @@ class HashMap:
         index = self._hash(key)
         i = 1
         while self.table[index] is not None:
-            for k,v in self.table[index]:
+            for k, v in self.table[index]:
                 if k == key:
                     return index
             index = (index + i * i) % self.capacity
