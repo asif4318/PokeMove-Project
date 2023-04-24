@@ -24,3 +24,4 @@ for pokemon, learnset, in data.items():
         else:
             moveList[move] = pokemon
 
+print(moveList['cut'])

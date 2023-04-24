@@ -22,20 +22,42 @@ let uniqueNames = new Set();
 while (uniqueNames.size < 100000) {
   var real_pokemon =
     real_pokemon_names[Math.floor(Math.random() * real_pokemon_names.length)];
-  let name = capitalize(real_pokemon) + faker.name.firstName();
+  let name = real_pokemon + faker.name.firstName();
   uniqueNames.add(name);
 }
 
-// Convert the Set to an array and print it out
 let names = Array.from(uniqueNames);
-let csvRows = names.map((name) => `"${name}"\n`);
+let unique_pokemon_w_moves = [];
+
+for (let i = 0; i < names.length; i++) {
+  const name_to_split = names[i];
+  const regex = /[A-Z]?[a-z]+|[0-9]+|[A-Z]+(?![a-z])/g;
+  const pokemon_species = name_to_split.match(regex)[0];
+
+  let delimited_moves = Object.keys(
+    BattleLearnsets[pokemon_species].learnset
+  ).join("|");
+
+  let name_move_string = pokemon_species + "," + delimited_moves;
+  unique_pokemon_w_moves.push(name_move_string);
+}
+
+// Convert the Set to an array and print it out
+let header = "POKEMON, LEARNSET\n";
+let csvRows = unique_pokemon_w_moves.join("\n");
+
+//console.log(unique_pokemon_w_moves);
+
+// console.log(
+//   Object.keys(BattleLearnsets[real_pokemon_names[0]].learnset).join("|")
+// );
 
 // Write the CSV rows to a file
 fs.writeFile(
-  path.join(__dirname, "output/names.csv"),
-  csvRows.join(""),
+  path.join(__dirname, "output/pokemon.csv"),
+  header + csvRows,
   (err) => {
     if (err) throw err;
-    console.log("Names saved to names.csv");
+    console.log("Names saved to output/pokemon.csv");
   }
 );
