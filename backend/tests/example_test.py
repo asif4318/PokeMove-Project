@@ -1,7 +1,7 @@
 import unittest
 
 
-def getSpecies(name: str) -> str:
+def get_species(name: str) -> str:
     upperLetter = ''
     for letter in name:
         if (letter.isupper()):
@@ -14,5 +14,5 @@ def getSpecies(name: str) -> str:
 
 class TestGetSpecies(unittest.TestCase):
     def test_case(self):
-        self.assertEqual('pikachu', getSpecies('pikachuHey'))
-        self.assertRaises(ValueError, getSpecies, 'trash')
+        self.assertEqual('pikachu', get_species('pikachuHey'))
+        self.assertRaises(ValueError, get_species, 'trash')

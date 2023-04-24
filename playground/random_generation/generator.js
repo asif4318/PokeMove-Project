@@ -38,7 +38,7 @@ for (let i = 0; i < names.length; i++) {
     BattleLearnsets[pokemon_species].learnset
   ).join("|");
 
-  let name_move_string = pokemon_species + "," + delimited_moves;
+  let name_move_string = names[i] + "," + delimited_moves;
   unique_pokemon_w_moves.push(name_move_string);
 }
 

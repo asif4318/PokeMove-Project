@@ -1,4 +1,5 @@
 from hashmap import HashMap
+
 import json
 
 # Read data from JSON file

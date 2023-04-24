@@ -18,13 +18,27 @@ class HashMap:
         index = self._get_index(key)
         if self.table[index] is None:
             raise KeyError(key)
-        return self.table[index][1]
+        values = self.table[index]
+        names = []
+
+        for pairs in values:
+            names.append(pairs[1])
+
+        return names
 
     def __setitem__(self, key, value):
         if self.size >= self.capacity * 0.8:
             self._resize()
         index = self._get_index(key)
-        self.table[index] = (key, value)
+        if self.table[index] is None:
+            self.table[index] = [(key, value)]
+        # else:
+        #     for i, (k, v) in enumerate(self.table[index]):
+        #         if k == key:
+        #             self.table[index][i] = (key, value)
+        #             break
+        else:
+            self.table[index].append((key,value))
         self.size += 1
 
     def _resize(self):
@@ -32,17 +46,22 @@ class HashMap:
         self.capacity *= 2
         self.size = 0
         self.table = [None] * self.capacity
-        for pair in old_table:
-            if pair is not None:
-                self[pair[0]] = pair[1]
+        for pairs in old_table:
+            if pairs is not None:
+                for pair in pairs:
+                    self[pair[0]] = pair[1]
 
     def _hash(self, key):
         return hash(key) % self.capacity
 
+    # This function seems to be the issue
     def _get_index(self, key):
         index = self._hash(key)
         i = 1
-        while self.table[index] is not None and self.table[index][0] != key:
+        while self.table[index] is not None:
+            for k,v in self.table[index]:
+                if k == key:
+                    return index
             index = (index + i * i) % self.capacity
             i += 1
         return index
