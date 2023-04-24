@@ -1,4 +1,5 @@
 from modules.hashmap import HashMap
+from modules.graph import Graph, Node, NodeType
 import csv
 
 
@@ -6,12 +7,31 @@ class Helper:
     def __init__(self, csv_path):
         self.csv_path = csv_path
         self.hash_implementation = self.create_hash_map()
+        self.graph_implementation = self.create_graph()
 
-    def get_pokemon_move(self, pokemon_name: str) -> list[str]:
+    def get_pokemon_move_hash(self, pokemon_name: str) -> list[str]:
         return self.hash_implementation[pokemon_name]
 
+    def get_pokemon_move_map(self, pokemon_name: str) -> list[str]:
+        return
+
+    def create_graph(self) -> Graph:
+        graph: Graph = Graph()
+        with open(self.csv_path) as csv_file:
+            csv_reader = csv.reader(csv_file, delimiter=',')
+            for row in csv_reader:
+                pokemon = row[0]
+                moves = row[1].split(sep='|')
+                pokemon_node: Node = Node(NodeType.POKEMON, pokemon)
+                graph.add_node(pokemon_node)
+                for move in moves:
+                    move_node: Node = Node(NodeType.MOVE, move)
+                    graph.add_node(move_node)
+                    graph.add_edge(pokemon_node, move_node)
+        return graph
+
     def create_hash_map(self) -> HashMap:
-        moveList = HashMap(100)
+        move_list = HashMap(100)
 
         with open(self.csv_path) as csv_file:
             csv_reader = csv.reader(csv_file, delimiter=',')
@@ -19,15 +39,5 @@ class Helper:
                 pokemon = row[0]
                 moves = row[1].split(sep='|')
                 for move in moves:
-                    moveList[move] = pokemon
-        # with open(self.csv_path) as csv_file:
-        #     csv_reader = csv.reader(csv_file, delimiter=',')
-        #     for row in csv_reader:
-        #         pokemon = row[0]
-        #         moves = row[1].split(sep='|')
-        #         for move in moves:
-        #             if move in moveList:
-        #                 moveList[move] += f', {pokemon}'
-        #             else:
-        #                 moveList[move] = pokemon
-        return moveList
+                    move_list[move] = pokemon
+        return move_list

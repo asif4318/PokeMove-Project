@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./css/SearchBar.css";
 
-const SearchBar = ({ onChangeHandler, isSmallScreen }) => {
+const SearchBar = ({ onChangeHandler }) => {
   return (
     <input
       type="text"

@@ -31,7 +31,15 @@ const PokemonCard = ({ pokemon_name }) => {
   }, [pokemon_name]);
 
   return (
-    <div>
+    <div
+      style={{
+        border: "2px",
+        borderRadius: "10px",
+        borderColor: "black",
+        background: "gray",
+        margin: "1%",
+      }}
+    >
       <h2>{capitalizeName(pokemon_name)}</h2>
       <img src={spriteURL}></img>
     </div>

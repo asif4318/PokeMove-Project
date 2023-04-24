@@ -24,7 +24,32 @@ CORS(app, resources={r'/*': {'origins': '*'}})
 
 @app.route("/hashmap", methods=['GET'])
 @cross_origin()
-def test():
+def get_move_hashmap():
+    move = request.args.get('move')
+    print(move)
+    if move != None:
+        print(move)
+        try:
+            pokemon_list = helper.get_pokemon_move(move)
+            return_string = '\n'.join(pokemon_list)
+
+            response = jsonify(pokemon=return_string, status=200)
+            # response.headers.add("Access-Control-Allow-Origin", "*");
+            # response.headers.add("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+            # Enable Access-Control-Allow-Origin
+            return response
+
+        except KeyError:
+            print('Move does not exist!')
+    response = jsonify(status=400, details='Move does not exist!')
+    # response.headers.add("Access-Control-Allow-Origin", "*");
+    # response.headers.add("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    return response
+
+
+@app.route("/graph", methods=['GET'])
+@cross_origin()
+def get_move_hashmap():
     move = request.args.get('move')
     print(move)
     if move != None:

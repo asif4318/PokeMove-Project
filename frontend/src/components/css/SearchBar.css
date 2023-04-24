@@ -2,11 +2,11 @@
 
 input {
     width: 40%;
-    height: 2vh;
+    height: 3vh;
     background: #F0F0F0;
     border: none;
     border-radius: 8px;
-    padding: 0.5rem;
+    padding: 7px;
 }
 
 /* Change size of search box if the screen is small (mobile) */
