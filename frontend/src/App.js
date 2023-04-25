@@ -19,7 +19,7 @@ function App() {
         let tempList = data.pokemon.split("\n");
         console.log(tempList);
         for (let i = 0; i < tempList.length; i++) {
-          const wordRegex = /[A-Z]?[a-z]+|[0-9]+|[A-Z]+(?![a-z])/g;
+          const wordRegex = /[A-Z}[a-z\[A-Z]?[a-z\-]+|[0-9]+|[A-Z]/gm;
           const string = tempList[i];
           const result = string.match(wordRegex);
           tempList[i] = result[0] + " " + result[1];
