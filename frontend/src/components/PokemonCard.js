@@ -34,11 +34,11 @@ const PokemonCard = ({ pokemon_name }) => {
     <div
       style={{
         border: "2px",
-        borderRadius: "10px",
-        borderColor: "black",
         background: "gray",
-        margin: "1%",
+        background:
+          "radial-gradient(circle, rgba(148,187,233,1) 0%, rgba(204,202,244,1) 100%)",
       }}
+      className="pokemon-card"
     >
       <h2>{capitalizeName(pokemon_name)}</h2>
       <img src={spriteURL}></img>

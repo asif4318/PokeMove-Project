@@ -29,16 +29,47 @@ while (uniqueNames.size < 100000) {
 let names = Array.from(uniqueNames);
 let unique_pokemon_w_moves = [];
 
+const replaceBrokenNames = (pokemon_species) => {
+  const replacementMap = {
+    hooh: "ho-oh",
+    ironthorns: "iron-thorns",
+    mimikyutotem: "mimikyu-totem",
+    togedemarutotem: "togedemaru-totem",
+    pikachualola: "pikachu-alola",
+    pikachuworld: "pikachu-world",
+    wooperpaldea: "wooper-paldea",
+  };
+
+  const splitMap = ["totem", "alola", "paldea", "world"];
+
+  splitMap.map((elem) => {
+    if (pokemon_species.includes(elem)) {
+      const index = pokemon_species.indexOf(elem);
+      const fname = pokemon_species.substring(0, index);
+      const lname = pokemon_species.substring(index);
+      return fname + "-" + lname;
+    }
+  });
+
+  if (replaceBrokenNames.hasOwnProperty(pokemon_species)) {
+    return replacementMap[pokemon_species];
+  }
+
+  return pokemon_species;
+};
+
 for (let i = 0; i < names.length; i++) {
   const name_to_split = names[i];
   const regex = /[A-Z]?[a-z]+|[0-9]+|[A-Z]+(?![a-z])/g;
-  const pokemon_species = name_to_split.match(regex)[0];
+  let pokemon_species = name_to_split.match(regex)[0];
 
   let delimited_moves = Object.keys(
     BattleLearnsets[pokemon_species].learnset
   ).join("|");
 
-  let name_move_string = names[i] + "," + delimited_moves;
+  pokemon_species = replaceBrokenNames(pokemon_species);
+  const name_move_string =
+    pokemon_species + faker.name.lastName() + "," + delimited_moves;
   unique_pokemon_w_moves.push(name_move_string);
 }
 

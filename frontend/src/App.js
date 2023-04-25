@@ -17,6 +17,7 @@ function App() {
       .then((res) => res.json())
       .then((data) => {
         let tempList = data.pokemon.split("\n");
+        console.log(tempList);
         for (let i = 0; i < tempList.length; i++) {
           const wordRegex = /[A-Z]?[a-z]+|[0-9]+|[A-Z]+(?![a-z])/g;
           const string = tempList[i];
@@ -38,6 +39,7 @@ function App() {
         temp.push(pokemonList[i]);
       }
       setFirstTen(temp);
+      console.log(temp);
     }
   }, [pokemonList]);
 
@@ -47,7 +49,7 @@ function App() {
       <div>
         <SearchBar onChangeHandler={handleChange} />
       </div>
-      <div className="pokemon-grid">
+      <div className="pokemon-grid" style={{ background: "rgb(148,187,233)" }}>
         {firstTen.map((names) => {
           return <PokemonCard pokemon_name={names} />;
         })}
