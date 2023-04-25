@@ -13,7 +13,7 @@ function App() {
   };
 
   useEffect(() => {
-    fetch(`http://127.0.0.1:5000/hashmap?move=${searchText}`)
+    fetch(`http://127.0.0.1:5000/splaytree?move=${searchText}`)
       .then((res) => res.json())
       .then((data) => {
         let tempList = data.pokemon.split("\n");

@@ -1,4 +1,5 @@
 import React from "react";
+import PokedexEntry from "./components/PokedexEntry";
 import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "./index.css";
@@ -10,13 +11,14 @@ const router = createBrowserRouter([
     path: "/",
     element: <App />,
   },
+  { path: "/card/:pokemonName", element: <PokedexEntry /> },
 ]);
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <App />
-    {/* <RouterProvider router={router} /> */}
+    {/* <RouterProvider router={{ router }} /> */}
+    <RouterProvider router={router} />
   </React.StrictMode>
 );
 

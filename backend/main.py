@@ -1,12 +1,12 @@
 from flask import Flask, request, jsonify, make_response
 from flask_cors import CORS, cross_origin
 from modules.helper import Helper
+import time
 from modules.graph import NodeType, Node
 from dotenv import dotenv_values
 
 config = dotenv_values(".env")
 
-print("Creating Hash Map")
 helper = Helper(config['CSV_PATH'])
 
 # instantiate the app
@@ -28,10 +28,12 @@ def get_move_hashmap():
     if move != None:
         print(move)
         try:
-            pokemon_list = helper.get_pokemon_move_hash(move)
+            start_time = time.time()
+            pokemon_list = helper.get_move_hash(move)
+            end_time = time.time()
             return_string = '\n'.join(pokemon_list)
 
-            response = jsonify(pokemon=return_string, status=200)
+            response = jsonify(time=end_time-start_time, count=len(pokemon_list), pokemon=return_string, status=200)
             return response
 
         except KeyError:
@@ -47,15 +49,36 @@ def get_move_graph():
     if move != None:
         print(move)
         try:
-            pokemon_list = helper.get_pokemon_move_graph(move)
-            print(pokemon_list)
+            start_time = time.time()
+            pokemon_list = helper.get_move_graph(move)
+            end_time = time.time()
+
             return_string = '\n'.join(pokemon_list)
 
-            response = jsonify(pokemon=return_string, status=200)
+            response = jsonify(time=end_time-start_time, pokemon=return_string, status=200, count=len(pokemon_list))
             return response
 
         except ValueError:
             print('Move does not exist!')
+    response = jsonify(status=400, details='Move does not exist!')
+    return response
+
+
+@app.route("/splaytree", methods=['GET'])
+@cross_origin()
+def get_move_splay_tree():
+    move = request.args.get('move')
+    if move is not None:
+        # print(move)
+        start_time = time.time()
+        pokemon_list = helper.get_move_splay_tree(move)
+        end_time = time.time()
+
+        if pokemon_list is not None:
+            return_string = '\n'.join(pokemon_list)
+            response = jsonify(time=end_time-start_time, pokemon=return_string, status=200, count=len(pokemon_list))
+            return response
+
     response = jsonify(status=400, details='Move does not exist!')
     return response
 
