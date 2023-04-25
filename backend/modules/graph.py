@@ -9,18 +9,17 @@ class NodeType(Enum):
 class Node:
     def __init__(self, type: NodeType, name: str):
         self.type: NodeType = type
-        self.name = name
+        self.name : str = name
 
     # Overload equality operator for comparison
     def __eq__(self, other):
-        if self.type == other.type and self.name == other.name:
-            return True
-        else:
-            return False
+        if isinstance(other, Node):
+            return self.name == other.name
 
     # Make nodes hashable
     def __hash__(self):
-        return hash(str(self.type)+self.name)
+        temp = hash(str(self.name) + str(self.type.value))
+        return temp
 
 
 class Graph:
@@ -60,12 +59,12 @@ class Graph:
         else:
             return False
 
-    def return_adj_pokemon_nodes(self, node: Node):
-        if node.type != NodeType.MOVE:
-            raise ValueError(node.name);
-
+    def return_adj_pokemon_nodes(self, name:str):
         pokemon: list[str] = []
-        for adjacent in self.adjList[node]:
+        # print(self.adjList[][0].name)
+        for adjacent in self.adjList[Node(NodeType.MOVE, name)]:
             pokemon.append(adjacent.name)
 
         return pokemon
+
+
