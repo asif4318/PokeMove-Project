@@ -1,34 +1,41 @@
-const { faker } = require("@faker-js/faker");
-const path = require("path");
-const fs = require("fs");
-const { BattleLearnsets } = require("./learnsets.js");
+/*This file generates a CSV file of 100K random pokemon*/
 
-function capitalize(s) {
-  return s[0].toUpperCase() + s.slice(1);
-}
+const { faker } = require("@faker-js/faker"); // Library to generate fake names
+const path = require("path"); // Library to get file paths
+const fs = require("fs"); // Library for read/write
+const { BattleLearnsets } = require("./learnsets.js"); // Pokemon Showdown Dataset
 
+// The keys in the BattleLearnsets object
 let keys = Object.keys(BattleLearnsets);
 let real_pokemon_names = [];
 
 for (let i = 0; i < keys.length; i++) {
+  // Add to the array only if the key is a pokemon and has the "learnset" prop
   if (BattleLearnsets[keys[i]].hasOwnProperty("learnset") == true) {
     real_pokemon_names.push(keys[i]);
   }
 }
 
+// Ensure there are unique entries only using a set
 let uniqueNames = new Set();
 
 // Generate unique names until we have 100,000 of them
 while (uniqueNames.size < 100000) {
-  var real_pokemon =
+  // Get a random pokemon from the list
+  const real_pokemon =
     real_pokemon_names[Math.floor(Math.random() * real_pokemon_names.length)];
-  let name = real_pokemon + faker.name.firstName();
+  // Append a fake name for unique combinations
+  const name = real_pokemon + faker.name.firstName();
   uniqueNames.add(name);
 }
 
+// Create an array from the set
 let names = Array.from(uniqueNames);
+
+// List to store a string in format "pokemon, MOVE1|MOVE2|MOVE3..."
 let unique_pokemon_w_moves = [];
 
+// function to replace certain names with proper names in sprite API
 const replaceBrokenNames = (pokemon_species) => {
   const replacementMap = {
     hooh: "ho-oh",
@@ -60,6 +67,7 @@ const replaceBrokenNames = (pokemon_species) => {
 
 for (let i = 0; i < names.length; i++) {
   const name_to_split = names[i];
+  //Regex to split names at first capital
   const regex = /[A-Z]?[a-z]+|[0-9]+|[A-Z]+(?![a-z])/g;
   let pokemon_species = name_to_split.match(regex)[0];
 
@@ -73,15 +81,10 @@ for (let i = 0; i < names.length; i++) {
   unique_pokemon_w_moves.push(name_move_string);
 }
 
-// Convert the Set to an array and print it out
+// Define the CSV header
 let header = "POKEMON, LEARNSET\n";
+// csv data, separated by a new line for each row
 let csvRows = unique_pokemon_w_moves.join("\n");
-
-//console.log(unique_pokemon_w_moves);
-
-// console.log(
-//   Object.keys(BattleLearnsets[real_pokemon_names[0]].learnset).join("|")
-// );
 
 // Write the CSV rows to a file
 fs.writeFile(

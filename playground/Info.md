@@ -1,3 +1,5 @@
+# The playground Folder is just proof of concept code and experimentation
+
 # Symbols
 
 - E: egg
