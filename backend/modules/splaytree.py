@@ -1,3 +1,4 @@
+# Node to be used in Splay Tree
 class SplayNode:
     def __init__(self, key: str, data: list[str]):
         self.key = key
@@ -77,6 +78,7 @@ class SplayTree:
             node.parent = left_child
 
     def insert(self, key, data=None):
+        # Base case
         if self.root is None:
             self.root = SplayNode(key, data)
             return
@@ -121,4 +123,3 @@ class SplayTree:
 
         # Node with the given key not found
         return None
-

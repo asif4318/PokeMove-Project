@@ -49,7 +49,6 @@ class HashMap:
     def _hash(self, key):
         return hash(key) % self.capacity
 
-    # This function seems to be the issue
     def _get_index(self, key):
         index = self._hash(key)
         i = 1

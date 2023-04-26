@@ -49,7 +49,7 @@ function App() {
       <div>
         <SearchBar onChangeHandler={handleChange} />
       </div>
-      <div className="pokemon-grid" style={{ background: "rgb(148,187,233)" }}>
+      <div className="pokemon-grid">
         {firstTen.map((names) => {
           return <PokemonCard pokemon_name={names} />;
         })}

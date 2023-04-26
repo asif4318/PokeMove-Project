@@ -1,5 +1,7 @@
 from enum import Enum
 
+# Enum to define the type of node
+
 
 class NodeType(Enum):
     MOVE = 1
@@ -9,7 +11,7 @@ class NodeType(Enum):
 class Node:
     def __init__(self, type: NodeType, name: str):
         self.type: NodeType = type
-        self.name : str = name
+        self.name: str = name
 
     # Overload equality operator for comparison
     def __eq__(self, other):
@@ -22,6 +24,7 @@ class Node:
         return temp
 
 
+# Bipartite Undirected graph
 class Graph:
     def __init__(self):
         self.adjList: dict = dict()
@@ -59,12 +62,8 @@ class Graph:
         else:
             return False
 
-    def return_adj_pokemon_nodes(self, name:str):
+    def return_adj_pokemon_nodes(self, name: str):
         pokemon: list[str] = []
-        # print(self.adjList[][0].name)
         for adjacent in self.adjList[Node(NodeType.MOVE, name)]:
             pokemon.append(adjacent.name)
-
         return pokemon
-
-

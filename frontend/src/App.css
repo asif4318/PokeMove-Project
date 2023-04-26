@@ -1,9 +1,11 @@
 .App {
   text-align: center;
+  background: rgb(148,187,233);
 }
 
 .pokemon-grid {
   margin-top: 1%;
+  background: rgb(148,187,233);
   @media screen and (min-width: 600px) {
     display: grid;
     grid-template-columns: repeat(5, 20%);
