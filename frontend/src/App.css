@@ -4,7 +4,7 @@
 
 .buttonBar > * {
   margin: 1vh;
-  padding: 0.5vh
+  padding: 0.5vh;
 }
 
 .buttonBar button {
@@ -16,7 +16,8 @@
 
 .pokemon-grid {
   margin-top: 1%;
-  background: rgb(148,187,233);
+  background: rgb(148, 187, 233);
+  display: block;
   @media screen and (min-width: 600px) {
     display: grid;
     grid-template-columns: repeat(5, 20%);
@@ -25,7 +26,7 @@
 }
 
 .pokemon-card {
-  transition: transform .3s ease-out;
+  transition: transform 0.3s ease-out;
 }
 
 .dot {
@@ -37,5 +38,5 @@
 }
 
 .pokemon-card::hover {
-  transform: translateZ(150px)
+  transform: translateZ(150px);
 }

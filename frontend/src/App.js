@@ -16,7 +16,7 @@ function App() {
 
   // Function to handle when search bar text changes and update state
   const handleChange = (evt) => {
-    setSearchText(evt.target.value);
+    setSearchText(evt.target.value.toLowerCase());
   };
 
   // Update side effects when search text state is updated
@@ -146,7 +146,7 @@ function App() {
             {searchMethodAsText()} data structure
           </h4>
           <button onClick={toggleSearchMethod}>
-            {searchMethod == "hashmap" ? "Hash Map" : "Splay Tree"}
+            {searchMethod === "hashmap" ? "Hash Map" : "Splay Tree"}
           </button>
         </div>
         <button onClick={() => decrementPage()}>Previous 50</button>
