@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import "./css/PokedexEntry.css";
 
+// The Page that loads when a pokemon is clicked
 const PokedexEntry = () => {
   let { state } = useLocation();
   const missingSpriteURL =
@@ -12,28 +13,36 @@ const PokedexEntry = () => {
   const [fetchTime, setFetchTime] = useState(0);
   const [searchMethod, setSearchMethod] = useState("splaytree");
 
+  // Function to set sprite
   const getSprite = () => {
     try {
       const temp = state.pokemon_name.split(" ")[0];
       //Smogon api to get image
       setSpriteURL(`https://www.smogon.com/dex/media/sprites/xy/${temp}.gif`);
     } catch (error) {
-      setSpriteURL("");
+      setSpriteURL(missingSpriteURL);
     }
   };
 
+  // Fetch the list of moves from backend api
   const fetchMove = () => {
     const searchName =
       state.pokemon_name.split(" ")[0] + state.pokemon_name.split(" ")[1];
     const url =
-      `http://127.0.0.1:5000/${searchMethod}/pokemon?name=` + searchName;
+      `https://asifislam510.pythonanywhere.com/${searchMethod}/pokemon?name=` +
+      searchName;
     fetch(url)
       .then((res) => res.json())
       .then((data) => {
         if (data.status === 200) {
+          // if OK
           let tempList = data.moves.split("\n");
           setMoveList(tempList);
           setFetchTime(data.time);
+        } else {
+          // if error
+          setMoveList([]);
+          setFetchTime(0);
         }
       });
   };
@@ -43,6 +52,7 @@ const PokedexEntry = () => {
     fetchMove();
   }, []);
 
+  // Toggle between API endpoints
   const switchSearchMethod = () => {
     if (searchMethod === "hashmap") {
       setSearchMethod("splaytree");
@@ -52,12 +62,14 @@ const PokedexEntry = () => {
     fetchMove();
   };
 
+  // split names (Ex: pikachuAlan => Pikachu Alan)
   const getFormattedName = (pokemon_name) => {
     const fname = pokemon_name.split(" ")[0];
     const upperCase = fname.substring(0, 1).toUpperCase() + fname.substring(1);
     return upperCase + " " + pokemon_name.split(" ")[1];
   };
 
+  // Capitalize the first letter of the word
   const capitalize = (word) =>
     word.substring(0, 1).toUpperCase() + word.substring(1);
 
@@ -90,6 +102,7 @@ const PokedexEntry = () => {
             implementation`}
           </p>
           <div className="move-list">
+            {/**Map each move to a link */}
             {moveList.map((elem, i) => {
               return (
                 <a

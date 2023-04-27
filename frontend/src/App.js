@@ -4,43 +4,56 @@ import SearchBar from "./components/SearchBar";
 import PokemonCard from "./components/PokemonCard";
 
 function App() {
+  // State variables
   const [searchText, setSearchText] = useState("");
   const [pokemonList, setList] = useState("");
-  const [firstTen, setFirstTen] = useState([]);
+  const [pokemonToDisplay, setPokemonToDisplay] = useState([]);
   const [searchMethod, setSearchMethod] = useState("splaytree");
   const [resultsCount, setResultsCount] = useState(0);
   const [fetchTime, setFetchTime] = useState(0);
   const [arrayIndex, setArrayIndex] = useState(0);
   const [pageCount, setPageCount] = useState(1);
 
+  // Function to handle when search bar text changes and update state
   const handleChange = (evt) => {
     setSearchText(evt.target.value);
   };
 
+  // Update side effects when search text state is updated
   useEffect(() => {
     if (searchText !== "") {
-      fetch(`http://127.0.0.1:5000/${searchMethod}/moves?name=${searchText}`)
-        .then((res) => res.json())
+      // If not empty send API request
+      fetch(
+        `https://asifislam510.pythonanywhere.com/${searchMethod}/moves?name=${searchText}`
+      )
+        .then((res) => res.json()) // Convert API to json
         .then((data) => {
+          // Parse data
           let tempList = data.pokemon.split("\n");
-          console.log(tempList);
+
+          //Split the names and update array
           for (let i = 0; i < tempList.length; i++) {
             const wordRegex = /[A-Z}[a-z[A-Z]?[a-z\-]+|[0-9]+|[A-Z]/gm;
             const string = tempList[i];
             const result = string.match(wordRegex);
             tempList[i] = result[0] + " " + result[1];
           }
+          // Update count and fetch time
           setResultsCount(data.count);
           setFetchTime(data.time);
+
           if (data.count > 0) {
+            // Update list of pokemon with fetch results
             setList(tempList);
           } else {
+            // Set all to 0/undefined if no results
             setList(undefined);
             setResultsCount(0);
             setFetchTime(0);
           }
         })
         .catch((e) => {
+          // Error handling
           console.log(e);
           setList(undefined);
         });
@@ -50,10 +63,11 @@ function App() {
     }
   }, [searchText, searchMethod]);
 
+  // Update list of displayed pokemon when array index or the results are updated
   useEffect(() => {
     if (pokemonList !== undefined) {
       console.log(pokemonList[0]);
-      setFirstTen([]);
+      setPokemonToDisplay([]);
       let temp = [];
       const i_max =
         pokemonList.length < arrayIndex + 50 ? pokemonList : arrayIndex + 50;
@@ -61,13 +75,15 @@ function App() {
         console.log(i_max);
         temp.push(pokemonList[i]);
       }
-      setFirstTen(temp);
+      setPokemonToDisplay(temp);
       console.log(temp);
     } else {
+      // If the search bar is empty
       setResultsCount(0);
     }
   }, [pokemonList, arrayIndex]);
 
+  // Decrement currently viewed page of pokemon
   const decrementPage = () => {
     if (pokemonList === undefined) {
       return;
@@ -78,6 +94,7 @@ function App() {
     }
   };
 
+  // Increment currently viewed page of pokemon
   const incrementPage = () => {
     if (pokemonList === undefined) {
       return;
@@ -88,6 +105,7 @@ function App() {
     }
   };
 
+  // Calculate the number of pages of pokemon results
   const numPages = () => {
     if (pokemonList !== undefined) {
       return Math.ceil(pokemonList.length / 50);
@@ -138,7 +156,8 @@ function App() {
         <button onClick={() => incrementPage()}>Next 50</button>
       </div>
       <div className="pokemon-grid">
-        {firstTen.map((names, i) => {
+        {/*Map each pokemon to a Pokemon Card element */}
+        {pokemonToDisplay.map((names, i) => {
           return <PokemonCard pokemon_name={names} key={i} />;
         })}
       </div>

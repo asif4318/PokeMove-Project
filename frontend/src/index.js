@@ -5,6 +5,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "./index.css";
 import App from "./App";
 
+// Set Paths with React Router
 const router = createBrowserRouter([
   {
     path: "/",
