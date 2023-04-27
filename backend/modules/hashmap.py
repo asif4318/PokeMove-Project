@@ -17,7 +17,7 @@ class HashMap:
     def __getitem__(self, key):
         index = self._get_index(key)
         if self.table[index] is None:
-            raise KeyError(key)
+            raise KeyError(key) # Error if key not found
         values = self.table[index]
         names = []
 

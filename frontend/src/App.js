@@ -36,6 +36,8 @@ function App() {
             setList(tempList);
           } else {
             setList(undefined);
+            setResultsCount(0);
+            setFetchTime(0);
           }
         })
         .catch((e) => {
@@ -67,7 +69,7 @@ function App() {
   }, [pokemonList, arrayIndex]);
 
   const decrementPage = () => {
-    if (arrayIndex - 50 > 0) {
+    if (arrayIndex - 50 >= 0) {
       setArrayIndex(arrayIndex - 50);
       setPageCount(pageCount - 1);
     }
