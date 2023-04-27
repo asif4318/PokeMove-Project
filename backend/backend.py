@@ -10,7 +10,6 @@ helper = Helper("static/pokemon.csv")
 
 # instantiate the Flask app & enable cors (security policy)
 app = Flask(__name__)
-#app.config['CORS_HEADERS'] = 'Content-Type'
 
 # enable CORS
 CORS(app)
@@ -20,15 +19,15 @@ CORS(app)
 
 
 @app.route("/hashmap/moves", methods=['GET'])
-#@cross_origin()
+# @cross_origin()
 def get_move_hashmap():
     move = request.args.get('name')
     print(move)
     if move != None:
         print(move)
         try:
-            start_time = time.time_ns()  # starter timer
-            pokemon_list = helper.get_move_hash(move)
+            start_time = time.time_ns()  # start timer
+            pokemon_list = helper.get_move_hash(move) # Get pokemon list
             end_time = time.time_ns()  # end timer
             # Combine results into string
             return_string = '\n'.join(pokemon_list)
@@ -46,34 +45,34 @@ def get_move_hashmap():
 
 
 @app.route("/hashmap/pokemon", methods=['GET'])
-#@cross_origin()
+# @cross_origin()
 def get_pokemon_hashmap():
     pokemon = request.args.get('name')
     print(pokemon)
     if pokemon is not None:
         print(pokemon)
         try:
-            start_time = time.time_ns()
-            move_list = helper.get_pokemon_hash(pokemon)
-            end_time = time.time_ns()
-            return_string = '\n'.join(move_list)
+            start_time = time.time_ns() # Start timer
+            move_list = helper.get_pokemon_hash(pokemon) # Get moves
+            end_time = time.time_ns() # End timer
+            return_string = '\n'.join(move_list) # Stringify moves
 
             response = jsonify(
-                time=end_time-start_time, count=len(move_list), moves=return_string, status=200)
-            response.headers.add('Access-Control-Allow-Origin', '*')
+                time=end_time-start_time, count=len(move_list), moves=return_string, status=200) # Create response
+            response.headers.add('Access-Control-Allow-Origin', '*') # CORS
             return response
 
         except KeyError:
             print('Pokemon does not exist!')
-    response = jsonify(status=400, details='Pokemon does not exist!', count=0)
-    response.headers.add('Access-Control-Allow-Origin', '*')
+    response = jsonify(status=400, details='Pokemon does not exist!', count=0) # Handle does not exist
+    response.headers.add('Access-Control-Allow-Origin', '*') # CORS
     return response
 
 # Route to get move via splaytree implementation
 
 
 @app.route("/splaytree/moves", methods=['GET'])
-#@cross_origin()
+# @cross_origin()
 def get_move_splay_tree():
     move = request.args.get('name')
     if move is not None:
@@ -100,7 +99,7 @@ def get_move_splay_tree():
 
 
 @app.route("/splaytree/pokemon", methods=['GET'])
-#@cross_origin()
+# @cross_origin()
 def get_pokemon_splay_tree():
     pokemon = request.args.get('name')
     if pokemon is not None:

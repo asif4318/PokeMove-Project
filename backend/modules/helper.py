@@ -16,6 +16,7 @@ class Helper:
         self.create_hash_map()
         print('Loading Hashmap complete!')
 
+        # Graph implementation no longer used
         # print('Loading Graph!')
         # self.graph_implementation = self.create_graph()
         # print('Loading Graph complete!')
@@ -46,6 +47,8 @@ class Helper:
             return result.data
         return None
 
+
+# Unused from graph implementation
     def create_graph(self) -> Graph:
         graph: Graph = Graph()
         with open(self.csv_path) as csv_file:

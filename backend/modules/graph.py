@@ -1,3 +1,5 @@
+# THIS FILE IS UNUSED - FROM FORMER IMPLEMENTATION OF USING GRAPHS TO SEARCH
+
 from enum import Enum
 
 # Enum to define the type of node
