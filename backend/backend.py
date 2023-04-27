@@ -26,9 +26,9 @@ cors = CORS(app, resources={r'/*': {'origins': '*'}})
 @app.route("/hashmap/moves", methods=['GET'])
 @cross_origin()
 def get_move_hashmap():
-    move = request.args.get('name')
+    move = request.args.get('move')
     print(move)
-    if move is not None:
+    if move != None:
         print(move)
         try:
             start_time = time.time()
@@ -70,11 +70,11 @@ def get_pokemon_hashmap():
 # Route to get move via graph implementation
 
 
-@app.route("/graph", methods=['GET'])
+@app.route("/graph/moves", methods=['GET'])
 @cross_origin()
 def get_move_graph():
     move = request.args.get('move')
-    if move is not None:
+    if move != None:
         print(move)
         try:
             start_time = time.time()
@@ -98,13 +98,12 @@ def get_move_graph():
 @app.route("/splaytree/moves", methods=['GET'])
 @cross_origin()
 def get_move_splay_tree():
-    move = request.args.get('move')
+    move = request.args.get('name')
     if move is not None:
         # Start the timer
         start_time = time.time()
         # Get list of pokemon from Splay Tree
         pokemon_list = helper.get_move_splay_tree(move)
-        print()
         # End the timer
         end_time = time.time()
 

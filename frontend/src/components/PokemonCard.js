@@ -19,7 +19,6 @@ const PokemonCard = ({ pokemon_name }) => {
       const temp = nameToCapitalize.split(" ");
       const firstName = temp[0].charAt(0).toUpperCase() + temp[0].slice(1);
       const lastName = temp[1];
-      console.log(firstName + " " + lastName);
       return `${firstName} ${lastName}`;
     } catch (error) {
       console.log("Error: name undefined");
