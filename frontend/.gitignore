@@ -2,6 +2,8 @@
 .firebaserc
 firebase.json
 
+backend/venv/
+
 # dependencies
 /node_modules
 /.pnp
