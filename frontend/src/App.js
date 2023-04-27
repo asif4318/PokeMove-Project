@@ -48,7 +48,7 @@ function App() {
       setList(undefined);
       setFetchTime(0);
     }
-  }, [searchText]);
+  }, [searchText, searchMethod]);
 
   useEffect(() => {
     if (pokemonList !== undefined) {
@@ -69,17 +69,25 @@ function App() {
   }, [pokemonList, arrayIndex]);
 
   const decrementPage = () => {
+    if (pokemonList === undefined) {
+      return;
+    }
     if (arrayIndex - 50 >= 0) {
       setArrayIndex(arrayIndex - 50);
       setPageCount(pageCount - 1);
     }
   };
+
   const incrementPage = () => {
+    if (pokemonList === undefined) {
+      return;
+    }
     if (arrayIndex + 50 < pokemonList.length) {
       setArrayIndex(arrayIndex + 50);
       setPageCount(pageCount + 1);
     }
   };
+
   const numPages = () => {
     if (pokemonList !== undefined) {
       return Math.ceil(pokemonList.length / 50);
@@ -87,6 +95,7 @@ function App() {
       return 1;
     }
   };
+
   const toggleSearchMethod = () => {
     if (searchMethod === "hashmap") {
       setSearchMethod("splaytree");
@@ -95,16 +104,28 @@ function App() {
     }
   };
 
+  // Function to return "splaytree" as "Splay Tree" and "hashmap" as "Hash Map"
+  const searchMethodAsText = () => {
+    if (searchMethod === "splaytree") {
+      return "Splay Tree";
+    }
+    return "Hash Map";
+  };
+
   return (
     <div className="App">
       <h1>PokeMove Dex</h1>
       <div>
-        <SearchBar onChangeHandler={handleChange} />
+        <SearchBar
+          onChangeHandler={handleChange}
+          searchMethod={searchMethodAsText()}
+        />
       </div>
       <div className="buttonBar" style={{ margin: "1%" }}>
         <div>
           <h4>
-            {resultsCount} results fetched in {fetchTime}s
+            {resultsCount} results fetched in {fetchTime} nanoseconds using{" "}
+            {searchMethodAsText()} data structure
           </h4>
           <button onClick={toggleSearchMethod}>
             {searchMethod == "hashmap" ? "Hash Map" : "Splay Tree"}

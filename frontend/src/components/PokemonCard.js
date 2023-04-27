@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 
 const PokemonCard = ({ pokemon_name }) => {
   const [spriteURL, setSpriteURL] = useState("");
+  const missingSpriteURL =
+    "https://static.wikia.nocookie.net/pokemon/images/b/be/MissingNo.%28Aero%29Sprite.png";
 
   const getSprite = () => {
     try {
@@ -48,7 +50,11 @@ const PokemonCard = ({ pokemon_name }) => {
           {capitalizeName(pokemon_name)}
         </Link>
       </h2>
-      <img src={spriteURL}></img>
+      <img
+        onError={() => setSpriteURL(missingSpriteURL)}
+        style={{ height: "45%", maxWidth: "50%" }}
+        src={spriteURL}
+      ></img>
     </div>
   );
 };
