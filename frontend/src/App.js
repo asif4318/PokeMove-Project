@@ -7,9 +7,7 @@ function App() {
   const [searchText, setSearchText] = useState("");
   const [pokemonList, setList] = useState("");
   const [firstTen, setFirstTen] = useState([]);
-  const [apiURL, setApiURL] = useState(
-    "http://127.0.0.1:5000/splaytree/moves?name="
-  );
+  const [searchMethod, setSearchMethod] = useState("splaytree");
   const [resultsCount, setResultsCount] = useState(0);
   const [fetchTime, setFetchTime] = useState(0);
   const [arrayIndex, setArrayIndex] = useState(0);
@@ -20,14 +18,14 @@ function App() {
   };
 
   useEffect(() => {
-    if (searchText != "") {
-      fetch(apiURL + searchText)
+    if (searchText !== "") {
+      fetch(`http://127.0.0.1:5000/${searchMethod}/moves?name=${searchText}`)
         .then((res) => res.json())
         .then((data) => {
           let tempList = data.pokemon.split("\n");
           console.log(tempList);
           for (let i = 0; i < tempList.length; i++) {
-            const wordRegex = /[A-Z}[a-z\[A-Z]?[a-z\-]+|[0-9]+|[A-Z]/gm;
+            const wordRegex = /[A-Z}[a-z[A-Z]?[a-z\-]+|[0-9]+|[A-Z]/gm;
             const string = tempList[i];
             const result = string.match(wordRegex);
             tempList[i] = result[0] + " " + result[1];
@@ -81,10 +79,17 @@ function App() {
     }
   };
   const numPages = () => {
-    if (pokemonList != undefined) {
+    if (pokemonList !== undefined) {
       return Math.ceil(pokemonList.length / 50);
     } else {
       return 1;
+    }
+  };
+  const toggleSearchMethod = () => {
+    if (searchMethod === "hashmap") {
+      setSearchMethod("splaytree");
+    } else {
+      setSearchMethod("hashmap");
     }
   };
 
@@ -99,7 +104,9 @@ function App() {
           <h4>
             {resultsCount} results fetched in {fetchTime}s
           </h4>
-          <button>Pokemon/Move</button>
+          <button onClick={toggleSearchMethod}>
+            {searchMethod == "hashmap" ? "Hash Map" : "Splay Tree"}
+          </button>
         </div>
         <button onClick={() => decrementPage()}>Previous 50</button>
         <span>
@@ -108,8 +115,8 @@ function App() {
         <button onClick={() => incrementPage()}>Next 50</button>
       </div>
       <div className="pokemon-grid">
-        {firstTen.map((names) => {
-          return <PokemonCard pokemon_name={names} />;
+        {firstTen.map((names, i) => {
+          return <PokemonCard pokemon_name={names} key={i} />;
         })}
       </div>
     </div>

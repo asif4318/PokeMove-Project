@@ -26,7 +26,7 @@ cors = CORS(app, resources={r'/*': {'origins': '*'}})
 @app.route("/hashmap/moves", methods=['GET'])
 @cross_origin()
 def get_move_hashmap():
-    move = request.args.get('move')
+    move = request.args.get('name')
     print(move)
     if move != None:
         print(move)
