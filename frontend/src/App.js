@@ -7,13 +7,16 @@ function App() {
   const [searchText, setSearchText] = useState("");
   const [pokemonList, setList] = useState("");
   const [firstTen, setFirstTen] = useState([]);
+  const [apiURL, setApiURL] = useState(
+    "http://127.0.0.1:5000/hashmap/moves?name="
+  );
 
   const handleChange = (evt) => {
     setSearchText(evt.target.value);
   };
 
   useEffect(() => {
-    fetch(`http://127.0.0.1:5000/splaytree?move=${searchText}`)
+    fetch(apiURL + searchText)
       .then((res) => res.json())
       .then((data) => {
         let tempList = data.pokemon.split("\n");
@@ -48,6 +51,15 @@ function App() {
       <h1>PokeMove Dex</h1>
       <div>
         <SearchBar onChangeHandler={handleChange} />
+      </div>
+      <div className="buttonBar" style={{ margin: "1%" }}>
+        <div>
+          <h4>1 of 23996 results fetched in 0.00043789s</h4>
+          <button>Pokemon/Move</button>
+        </div>
+        <button>Previous 50</button>
+        <span>Page 1 of 50</span>
+        <button>Next 50</button>
       </div>
       <div className="pokemon-grid">
         {firstTen.map((names) => {

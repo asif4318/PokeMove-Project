@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 
 const PokemonCard = ({ pokemon_name }) => {
   const [spriteURL, setSpriteURL] = useState("");
@@ -40,7 +41,14 @@ const PokemonCard = ({ pokemon_name }) => {
       }}
       className="pokemon-card"
     >
-      <h2>{capitalizeName(pokemon_name)}</h2>
+      <h2>
+        <Link
+          to={`/card/${pokemon_name}`}
+          state={{ pokemon_name: pokemon_name }}
+        >
+          {capitalizeName(pokemon_name)}
+        </Link>
+      </h2>
       <img src={spriteURL}></img>
     </div>
   );
