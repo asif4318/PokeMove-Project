@@ -14,7 +14,9 @@ This project demonstrates knowledge of data structures, namely splay trees and h
 
 ### Frontend Setup
 
-- cd frontend, npm install, npm start
+- `cd frontend`
+- `npm install`
+- `npm start`
 
 ### Backend Setup
 
