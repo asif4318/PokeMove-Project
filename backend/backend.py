@@ -27,7 +27,7 @@ def get_move_hashmap():
         print(move)
         try:
             start_time = time.time_ns()  # start timer
-            pokemon_list = helper.get_move_hash(move) # Get pokemon list
+            pokemon_list = helper.get_move_hash(move)  # Get pokemon list
             end_time = time.time_ns()  # end timer
             # Combine results into string
             return_string = '\n'.join(pokemon_list)
@@ -52,20 +52,21 @@ def get_pokemon_hashmap():
     if pokemon is not None:
         print(pokemon)
         try:
-            start_time = time.time_ns() # Start timer
-            move_list = helper.get_pokemon_hash(pokemon) # Get moves
-            end_time = time.time_ns() # End timer
-            return_string = '\n'.join(move_list) # Stringify moves
+            start_time = time.time_ns()  # Start timer
+            move_list = helper.get_pokemon_hash(pokemon)  # Get moves
+            end_time = time.time_ns()  # End timer
+            return_string = '\n'.join(move_list)  # Stringify moves
 
             response = jsonify(
-                time=end_time-start_time, count=len(move_list), moves=return_string, status=200) # Create response
-            response.headers.add('Access-Control-Allow-Origin', '*') # CORS
+                time=end_time-start_time, count=len(move_list), moves=return_string, status=200)  # Create response
+            response.headers.add('Access-Control-Allow-Origin', '*')  # CORS
             return response
 
         except KeyError:
             print('Pokemon does not exist!')
-    response = jsonify(status=400, details='Pokemon does not exist!', count=0) # Handle does not exist
-    response.headers.add('Access-Control-Allow-Origin', '*') # CORS
+    # Handle does not exist
+    response = jsonify(status=400, details='Pokemon does not exist!', count=0)
+    response.headers.add('Access-Control-Allow-Origin', '*')  # CORS
     return response
 
 # Route to get move via splaytree implementation
