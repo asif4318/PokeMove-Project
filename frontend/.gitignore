@@ -3,6 +3,7 @@
 firebase.json
 
 backend/venv/
+.DS_Store
 
 # dependencies
 /node_modules
