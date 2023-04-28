@@ -15,13 +15,9 @@ const PokedexEntry = () => {
 
   // Function to set sprite
   const getSprite = () => {
-    try {
-      const temp = state.pokemon_name.split(" ")[0];
-      //Smogon api to get image
-      setSpriteURL(`https://www.smogon.com/dex/media/sprites/xy/${temp}.gif`);
-    } catch (error) {
-      setSpriteURL(missingSpriteURL);
-    }
+    const temp = state.pokemon_name.split(" ")[0];
+    //Smogon api to get image
+    setSpriteURL(`https://www.smogon.com/dex/media/sprites/xy/${temp}.gif`);
   };
 
   // Fetch the list of moves from backend api

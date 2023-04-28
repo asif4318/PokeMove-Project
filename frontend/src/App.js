@@ -16,7 +16,10 @@ function App() {
 
   // Function to handle when search bar text changes and update state
   const handleChange = (evt) => {
-    setSearchText(evt.target.value.toLowerCase());
+    const currentVal = evt.target.value.toLowerCase();
+    //Get rid of spaces
+    const valNoSpaces = currentVal.split(" ").join("");
+    setSearchText(valNoSpaces);
   };
 
   // Update side effects when search text state is updated
