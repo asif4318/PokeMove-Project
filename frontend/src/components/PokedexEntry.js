@@ -93,7 +93,7 @@ const PokedexEntry = () => {
         </div>
         <div className="information-section">
           <h1>{getFormattedName(state.pokemon_name)}</h1>
-          <div class="move-header">
+          <div className="move-header">
             <h2>Moves</h2>
             <button onClick={switchSearchMethod}>{`Fetch Moves`}</button>
           </div>
