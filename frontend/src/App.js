@@ -32,23 +32,26 @@ function App() {
         .then((res) => res.json()) // Convert API to json
         .then((data) => {
           // Parse data
-          let tempList = data.pokemon.split("\n");
+          if (data.status !== 400) {
+            let tempList = data.pokemon.split("\n");
 
-          //Split the names and update array
-          for (let i = 0; i < tempList.length; i++) {
-            const wordRegex = /[A-Z}[a-z[A-Z]?[a-z\-]+|[0-9]+|[A-Z]/gm;
-            const string = tempList[i];
-            const result = string.match(wordRegex);
-            tempList[i] = result[0] + " " + result[1];
+            //Split the names and update array
+            for (let i = 0; i < tempList.length; i++) {
+              const wordRegex = /[A-Z}[a-z[A-Z]?[a-z\-]+|[0-9]+|[A-Z]/gm;
+              const string = tempList[i];
+              const result = string.match(wordRegex);
+              tempList[i] = result[0] + " " + result[1];
+            }
+            // Update count and fetch time
+            setResultsCount(data.count);
+            setFetchTime(data.time);
+            setList(tempList);
           }
-          // Update count and fetch time
-          setResultsCount(data.count);
-          setFetchTime(data.time);
 
           if (data.count > 0) {
             // Update list of pokemon with fetch results
-            setList(tempList);
           } else {
+            console.log("NO DATA");
             // Set all to 0/undefined if no results
             setList(undefined);
             setResultsCount(0);
@@ -83,6 +86,7 @@ function App() {
     } else {
       // If the search bar is empty
       setResultsCount(0);
+      setPokemonToDisplay([]);
     }
   }, [pokemonList, arrayIndex]);
 
