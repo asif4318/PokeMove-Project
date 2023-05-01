@@ -30,7 +30,7 @@
 @media only screen and (min-width: 300px) and (max-width: 665px) {
   .move-list {
     display: grid;
-    grid-template-columns: 85%;
+    grid-template-columns: 100%;
   }
 }
 

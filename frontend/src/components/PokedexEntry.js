@@ -48,8 +48,6 @@ const PokedexEntry = () => {
     fetchMove();
   }, []);
 
-  useEffect(() => {}, [spriteURL]);
-
   // Toggle between API endpoints
   const switchSearchMethod = () => {
     if (searchMethod === "hashmap") {
@@ -86,9 +84,10 @@ const PokedexEntry = () => {
           <img
             className="pokemon-sprite-large"
             src={spriteURL}
-            onError={() => {
-              setSpriteURL(missingSpriteURL);
+            onLoad={() => {
+              getSprite();
             }}
+            onError={() => setSpriteURL(missingSpriteURL)}
           ></img>
         </div>
         <div className="information-section">
