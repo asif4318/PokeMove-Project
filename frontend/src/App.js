@@ -72,17 +72,19 @@ function App() {
   // Update list of displayed pokemon when array index or the results are updated
   useEffect(() => {
     if (pokemonList !== undefined) {
-      console.log(pokemonList[0]);
       setPokemonToDisplay([]);
       let temp = [];
       const i_max =
-        pokemonList.length < arrayIndex + 50 ? pokemonList : arrayIndex + 50;
+        pokemonList.length > arrayIndex + 50
+          ? arrayIndex + 50
+          : pokemonList.length;
+
+      // pokemonList.length < arrayIndex + 50 ? pokemonList : arrayIndex + 50;
       for (let i = 0 + arrayIndex; i < i_max; i++) {
         console.log(i_max);
         temp.push(pokemonList[i]);
       }
       setPokemonToDisplay(temp);
-      console.log(temp);
     } else {
       // If the search bar is empty
       setResultsCount(0);
@@ -103,6 +105,7 @@ function App() {
 
   // Increment currently viewed page of pokemon
   const incrementPage = () => {
+    console.log(pokemonList[52]);
     if (pokemonList === undefined) {
       return;
     }
