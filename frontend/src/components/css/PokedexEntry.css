@@ -2,9 +2,9 @@
   display: grid;
   margin-top: 2%;
 
-  @media screen and (max-width: 600px) {
+  @media screen and (max-width: 665px) {
     grid-template-columns: 100%;
-    grid-template-rows: 6% 94%;
+    grid-template-rows: 4% 96%;
   }
   grid-template-columns: 20% 80%;
   grid-template-rows: 100%;
@@ -24,9 +24,13 @@
 
 .move-list {
   display: grid;
-  grid-template-columns: 20% 20% 20% 20%;
-  @media screen and (max-width: 400px) {
-    grid-template-columns: 100%;
+  grid-template-columns: repeat(4, 20%);
+}
+
+@media only screen and (min-width: 300px) and (max-width: 665px) {
+  .move-list {
+    display: grid;
+    grid-template-columns: 85%;
   }
 }
 
