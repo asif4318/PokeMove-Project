@@ -22,8 +22,7 @@ const PokedexEntry = () => {
 
   // Fetch the list of moves from backend api
   const fetchMove = () => {
-    const searchName =
-      state.pokemon_name.split(" ")[0] + state.pokemon_name.split(" ")[1];
+    const searchName = state.pokemon_name;
     const url =
       `https://asifislam510.pythonanywhere.com/${searchMethod}/pokemon?name=` +
       searchName;
@@ -60,9 +59,7 @@ const PokedexEntry = () => {
 
   // split names (Ex: pikachuAlan => Pikachu Alan)
   const getFormattedName = (pokemon_name) => {
-    const fname = pokemon_name.split(" ")[0];
-    const upperCase = fname.substring(0, 1).toUpperCase() + fname.substring(1);
-    return upperCase + " " + pokemon_name.split(" ")[1];
+    return capitalize(pokemon_name);
   };
 
   // Capitalize the first letter of the word

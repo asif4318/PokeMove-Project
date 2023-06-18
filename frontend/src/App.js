@@ -29,19 +29,12 @@ function App() {
       fetch(
         `https://asifislam510.pythonanywhere.com/${searchMethod}/moves?name=${searchText}`
       )
-        .then((res) => res.json()) // Convert API to json
+        .then((res) => res.json()) // Convert API response to json
         .then((data) => {
           // Parse data
           if (data.status !== 400) {
             let tempList = data.pokemon.split("\n");
 
-            //Split the names and update array
-            for (let i = 0; i < tempList.length; i++) {
-              const wordRegex = /[A-Z}[a-z[A-Z]?[a-z\-]+|[0-9]+|[A-Z]/gm;
-              const string = tempList[i];
-              const result = string.match(wordRegex);
-              tempList[i] = result[0] + " " + result[1];
-            }
             // Update count and fetch time
             setResultsCount(data.count);
             setFetchTime(data.time);

@@ -16,17 +16,9 @@ const PokemonCard = ({ pokemon_name }) => {
     }
   };
 
-  const capitalizeName = (nameToCapitalize) => {
-    try {
-      const temp = nameToCapitalize.split(" ");
-      const firstName = temp[0].charAt(0).toUpperCase() + temp[0].slice(1);
-      const lastName = temp[1];
-      return `${firstName} ${lastName}`;
-    } catch (error) {
-      console.log("Error: name undefined");
-      return "";
-    }
-  };
+  // Capitalize the first letter of the word
+  const capitalize = (word) =>
+    word.substring(0, 1).toUpperCase() + word.substring(1);
 
   useEffect(() => {
     getSprite();
@@ -47,7 +39,7 @@ const PokemonCard = ({ pokemon_name }) => {
           to={`/card/${pokemon_name}`}
           state={{ pokemon_name: pokemon_name }}
         >
-          {capitalizeName(pokemon_name)}
+          {capitalize(pokemon_name)}
         </Link>
       </h2>
       <img
